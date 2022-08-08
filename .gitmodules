@@ -1,0 +1,3 @@
+[submodule "rescue"]
+	path = rescue
+	url = https://github.nz/td512/rescuesystem
