@@ -29,10 +29,17 @@ It is therefore a really good idea if you build your own ISO. It's also one I wo
 
 Whilst I have no bad intentions, you should still verify that nothing harmful has made its way into the repo. Don't just take my word for it
 
+# Building Your Own
+Building your own ISO is super simple:
+- Clone this repo
+- Modify `build/config.sh` to your heart's desire
+- On a Debian or Ubuntu machine, run `build.sh`
+
+Yes, it really is just that simple.
+
 # Notes
 
 - This project is a WIP. Expect relatively frequent pushes that may break functionality that was previously working
 - Play round with the ISO as much as you like. On reboot your changes will be lost, and you'll be returned to an untouched state
 - If you find a bug or issue, by all means [create an issue](https://github.com/td512/issues)
 - Pull requests are very welcome. Browse around for a while and see what you can fix!
-
