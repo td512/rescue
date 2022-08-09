@@ -1,3 +1,6 @@
 [submodule "rescue"]
 	path = rescue
 	url = https://github.nz/td512/rescuesystem
+[submodule "images"]
+	path = images
+	url = https://github.nz/td512/rescue-images
