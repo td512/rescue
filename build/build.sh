@@ -12,6 +12,7 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 
 if [ "$(grep -Ei 'debian|buntu' /etc/*release)" ]; then
    echo "[+] Running prerequisite check..."
+   "${SCRIPTPATH}/prereq.sh"
 else
   echo "[-] Skipping prerequisite check (not Debian/Ubuntu)"
 fi
@@ -32,17 +33,17 @@ cp $RESCUE_SYSTEM_DIR/boot/initrd.img-* \
     $RESCUE_WORKDIR/staging/live/initrd
 
 echo "[+] Creating ISOLINUX config"
-cp $RESCUE_ISOLINUX_LEGACY_TEMPLATE $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
+cp "${SCRIPTPATH}/${RESCUE_ISOLINUX_LEGACY_TEMPLATE}" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
 sed -i -e "s/@@PRODUCTNAME@@/$RESCUE_PRODUCT_NAME/g" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
 
 echo "[+] Creating GRUB config"
-cp $RESCUE_GRUB_UEFI_TEMPLATE $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
+cp "${SCRIPTPATH}/${RESCUE_GRUB_UEFI_TEMPLATE}" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
 sed -i -e "s/@@PRODUCTNAME@@/$RESCUE_PRODUCT_NAME/g" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
 
 cp $RESCUE_WORKDIR/staging/boot/grub/grub.cfg $RESCUE_WORKDIR/staging/EFI/BOOT/
 
 echo "[+] Creating GRUB embed config"
-cp $RESCUE_GRUB_EMBED_TEMPLATE $RESCUE_WORKDIR/tmp/grub-embed.cfg
+cp "${SCRIPTPATH}/${RESCUE_GRUB_EMBED_TEMPLATE}" $RESCUE_WORKDIR/tmp/grub-embed.cfg
 
 echo "[+] Copying ISOLINUX files"
 cp /usr/lib/ISOLINUX/isolinux.bin "${RESCUE_WORKDIR}/staging/isolinux/" && \
