@@ -7,9 +7,8 @@ fi
 
 SCRIPT=$(realpath "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
-pushd "${SCRIPTPATH}"
 
-. ./config.sh
+. "${SCRIPTPATH}/config.sh"
 
 if [ "$(grep -Ei 'debian|buntu' /etc/*release)" ]; then
    echo "[+] Running prerequisite check..."
@@ -84,7 +83,6 @@ echo "[+] Creating EFI disk"
 )
 
 echo "[+] Creating ISO ${RESCUE_RESULT_DIR}/${RESCUE_OUTPUT_NAME}"
-popd
 xorriso \
     -as mkisofs \
     -iso-level 3 \
