@@ -13,6 +13,11 @@ This project has three main submodules.
 - `images` - this submodule contains OS images, just like you'd expect if you were using Hetzner. It's also the largest, so if you don't have very much disk space, *don't initialize this one*
 - `pxe` - this submodule contains tools and scripts that can be used to netboot the system. How convenient 
 
+## Other Submodules
+
+Other submodules included are:
+- `ipxe` - this is used by the build scripts to build a custom iPXE for use with this project
+
 # Usage
 
 Head over to [releases](https://github.com/td512/rescue/releases), there you'll find an ISO that is stock standard. When booting an image that is prebuilt, you need to take the following into account:

@@ -4,3 +4,6 @@
 [submodule "images"]
 	path = images
 	url = https://github.nz/td512/rescue-images
+[submodule "ipxe"]
+	path = ipxe
+	url = https://github.com/ipxe/ipxe
