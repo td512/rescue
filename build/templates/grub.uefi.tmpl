@@ -13,12 +13,12 @@ set timeout=5
 
 menuentry "@@PRODUCTNAME@@ [EFI/GRUB]" {
     search --no-floppy --set=root --label DEBLIVE
-    linux ($root)/live/vmlinuz boot=live
+    linux ($root)/live/vmlinuz boot=live nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@
     initrd ($root)/live/initrd
 }
 
 menuentry "@@PRODUCTNAME@@ [EFI/GRUB] (nomodeset)" {
     search --no-floppy --set=root --label DEBLIVE
-    linux ($root)/live/vmlinuz boot=live nomodeset
+    linux ($root)/live/vmlinuz boot=live nomodeset nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@
     initrd ($root)/live/initrd
 }
