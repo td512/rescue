@@ -19,9 +19,10 @@ run_auto_install() {
   if [ "$APT_UPDATE" = false ]; then
     echo "[*] Updating apt sources"
     run_apt_update
+    APT_UPDATE=true
+  fi
     echo "[*] Running apt install $1"
     run_apt_install $1
-  fi
 }
 
 auto_install_question () {
