@@ -18,10 +18,10 @@ LABEL linux
   MENU LABEL @@PRODUCTNAME@@ [BIOS/ISOLINUX]
   MENU DEFAULT
   KERNEL /live/vmlinuz
-  APPEND initrd=/live/initrd boot=live nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@
+  APPEND initrd=/live/initrd boot=live nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@ net.ifnames=0
 
 LABEL linux
   MENU LABEL @@PRODUCTNAME@@ [BIOS/ISOLINUX] (nomodeset)
   MENU DEFAULT
   KERNEL /live/vmlinuz
-  APPEND initrd=/live/initrd boot=live nomodeset nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@
+  APPEND initrd=/live/initrd boot=live nomodeset nfsserver=@@NFSSERVER@@ nfsdir=@@NFSDIR@@ net.ifnames=0
