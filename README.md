@@ -14,12 +14,6 @@ This project is a work in progress, and contains a few submodules. Beware, as so
 This project has three main submodules. 
 - `rescue` - this is where the rescue system lives. You can chroot into it just as you would a regular system. See below for notes on functionality and how things work
 - `images` - this submodule contains OS images, just like you'd expect if you were using Hetzner. It's also the largest, so if you don't have very much disk space, *don't initialize this one*
-- `pxe` - this submodule contains tools and scripts that can be used to netboot the system. How convenient 
-
-## Other Submodules
-
-Other submodules included are:
-- `ipxe` - this is used by the build scripts to build a custom iPXE for use with this project
 
 # Usage
 
@@ -43,7 +37,7 @@ Building your own ISO is super simple:
 - Modify `build/config.sh` to your heart's desire
 - On a Debian or Ubuntu machine, run `build.sh`
 
-Yes, it really is just that simple.
+Yes, it really is just that simple. An ISO and iPXE binary will be dropped into the directory specified by `RESCUE_RESULT_DIR` in `build/config.sh`.
 
 # Notes
 
