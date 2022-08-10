@@ -160,7 +160,7 @@ cp $RESCUE_SYSTEM_DIR/boot/vmlinuz-* \
     http/vmlinuz
 echo "[+] Copying initrd"
 cp $RESCUE_SYSTEM_DIR/boot/initrd.img-* \
-    http/initrd
+    http/initrd.img
 echo "[+] Copying filesystem.squashfs"
 cp $RESCUE_WORKDIR/staging/live/filesystem.squashfs http/filesystem.squashfs
 
