@@ -8,28 +8,29 @@ fi
 APT_UPDATE=false
 
 run_apt_update () {
-  apt update > /dev/null 2>&1
+  apt update
 }
 
 run_apt_install () {
-  apt install -y $1 > /dev/null 2>&1
+  apt install -y $1
 }
 
 run_auto_install() {
   if [ "$APT_UPDATE" = false ]; then
-    echo "Updating apt sources..."
+    echo "[*] Updating apt sources"
     run_apt_update
+    echo "[*] Running apt install $1"
     run_apt_install $1
   fi
 }
 
 auto_install_question () {
   while true; do
-      read -p "$1 is not installed. Do you wish to install this program? " yn
+      read -p "$1 is not installed. Do you wish to install this program (Y/n)? " yn
       case $yn in
           [Yy]* ) run_auto_install $1; break;;
           [Nn]* ) exit;;
-          * ) echo "Please answer yes or no.";;
+          * ) run_auto_install $1; break;;
       esac
   done
 
@@ -47,7 +48,8 @@ is_package_installed () {
 }
 
 if [ "$(grep -Ei 'debian|buntu' /etc/*release)" ]; then
-   is_package_installed 'debootstrap squashfs-tools xorriso isolinux syslinux-efi grub-pc-bin grub-efi-amd64-bin grub-efi-ia32-bin mtools dosfstools'
+   is_package_installed \
+   'debootstrap squashfs-tools xorriso isolinux syslinux-efi grub-pc-bin grub-efi-amd64-bin grub-efi-ia32-bin mtools dosfstools git gcc make liblzma-dev wget unzip'
 else
   echo "This script can only be run on a Debian or Ubuntu machine."
   exit 1

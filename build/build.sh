@@ -83,11 +83,11 @@ echo "[+] Creating EFI disk"
         ::/EFI/BOOT/
 )
 
-echo "[+] Creating ISO ${RESCUE_RESULT_DIR}/${RESCUE_OUTPUT_NAME}"
+echo "[+] Creating ISO ${RESCUE_RESULT_DIR}/${RESCUE_ISO_OUTPUT_NAME}"
 xorriso \
     -as mkisofs \
     -iso-level 3 \
-    -o "${RESCUE_RESULT_DIR}/${RESCUE_OUTPUT_NAME}" \
+    -o "${RESCUE_RESULT_DIR}/${RESCUE_ISO_OUTPUT_NAME}" \
     -full-iso9660-filenames \
     -volid "DEBLIVE" \
     --mbr-force-bootable -partition_offset 16 \
@@ -105,6 +105,48 @@ xorriso \
         -isohybrid-gpt-basdat \
     -append_partition 2 0xef ${RESCUE_WORKDIR}/staging/efiboot.img \
     "${RESCUE_WORKDIR}/staging"
+
+echo "[+] Downloading iPXE"
+pushd "${RESCUE_WORKDIR}"
+wget https://github.com/ipxe/ipxe/archive/refs/heads/master.zip
+unzip master.zip
+rm -f master.zip
+mv ipxe-master ipxe
+popd
+pushd "${RESCUE_WORKDIR}/ipxe/src"
+echo "[+] Configuring iPXE"
+echo "[+] Enabling HTTPS"
+sed -i 's/#undef\tDOWNLOAD_PROTO_HTTPS/#define\tDOWNLOAD_PROTO_HTTPS/' config/general.h
+echo "[+] Enabling NFS"
+sed -i 's/#undef\tDOWNLOAD_PROTO_NFS/#define\tDOWNLOAD_PROTO_NFS/' config/general.h
+echo "[+] Enabling ELF"
+sed -i 's/\/\/#define\ IMAGE_ELF/#define\ IMAGE_ELF/' config/general.h
+echo "[+] Enabling PXE"
+sed -i 's/\/\/#define\ IMAGE_PXE/#define\ IMAGE_PXE/' config/general.h
+echo "[+] Enabling SCRIPT"
+sed -i 's/\/\/#define\ IMAGE_SCRIPT/#define\ IMAGE_SCRIPT/' config/general.h
+echo "[+] Enabling BZIMAGE"
+sed -i 's/\/\/#define\ IMAGE_BZIMAGE/#define\ IMAGE_BZIMAGE/' config/general.h
+echo "[+] Enabling ZLIB"
+sed -i 's/\/\/#define\ IMAGE_ZLIB/#define\ IMAGE_ZLIB/' config/general.h
+echo "[+] Enabling GZIP"
+sed -i 's/\/\/#define\ IMAGE_GZIP/#define\ IMAGE_GZIP/' config/general.h
+echo "[+] Enabling NSLOOKUP"
+sed -i 's/\/\/#define\ NSLOOKUP_CMD/#define\ NSLOOKUP_CMD/' config/general.h
+echo "[+] Enabling VLAN"
+sed -i 's/\/\/#define\ VLAN_CMD/#define\ VLAN_CMD/' config/general.h
+echo "[+] Enabling REBOOT"
+sed -i 's/\/\/#define\ REBOOT_CMD/#define\ REBOOT_CMD/' config/general.h
+echo "[+] Enabling POWEROFF"
+sed -i 's/\/\/#define\ POWEROFF_CMD/#define\ POWEROFF_CMD/' config/general.h
+echo "[+] Enabling PING"
+sed -i 's/\/\/#define\ PING_CMD/#define\ PING_CMD/' config/general.h
+
+cp "${SCRIPTPATH}/templates/ipxe.tmpl" embed.ipxe
+sed -i -e 's/@@HOSTNAME@@/$RESCUE_IPXE_HOSTNAME/g' embed.ipxe
+make -j $(nproc) bin/undionly.kpxe EMBED=embed.ipxe
+popd
+cp "${RESCUE_WORKDIR}/ipxe/src/bin/undionly.kpxe" ./$RESCUE_IPXE_OUTPUT_NAME
 
 echo "[*] Cleaning up"
 rm -rf $RESCUE_WORKDIR

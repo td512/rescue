@@ -1,0 +1,7 @@
+#!ipxe
+
+dhcp
+kernel http://@@HOSTNAME@@/vmlinuz
+initrd http://@@HOSTNAME@@/initrd.img
+imgargs vmlinuz boot=live dhcp noprompt config console=ttyS0 fetch=http://@@HOSTNAME@@/filesystem.squashfs
+boot
