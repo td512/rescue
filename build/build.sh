@@ -36,13 +36,13 @@ echo "[+] Creating ISOLINUX config"
 cp "${SCRIPTPATH}/${RESCUE_ISOLINUX_LEGACY_TEMPLATE}" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
 sed -i -e "s/@@PRODUCTNAME@@/$RESCUE_PRODUCT_NAME/g" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
 sed -i -e "s/@@NFSSERVER@@/$RESCUE_NFS_SERVER/g" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
-sed -i -e "s/@@NFSDIR@@/$RESCUE_NFS_DIR/g" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
+sed -i -e "s|@@NFSDIR@@|$RESCUE_NFS_DIR|g" $RESCUE_WORKDIR/staging/isolinux/isolinux.cfg
 
 echo "[+] Creating GRUB config"
 cp "${SCRIPTPATH}/${RESCUE_GRUB_UEFI_TEMPLATE}" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
 sed -i -e "s/@@PRODUCTNAME@@/$RESCUE_PRODUCT_NAME/g" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
 sed -i -e "s/@@NFSSERVER@@/$RESCUE_NFS_SERVER/g" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
-sed -i -e "s/@@NFSSDIR@@/$RESCUE_NFS_DIR/g" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
+sed -i -e "s|@@NFSDIR@@|$RESCUE_NFS_DIR|g" $RESCUE_WORKDIR/staging/boot/grub/grub.cfg
 
 cp $RESCUE_WORKDIR/staging/boot/grub/grub.cfg $RESCUE_WORKDIR/staging/EFI/BOOT/
 
@@ -149,7 +149,7 @@ sed -i 's/\/\/#define\ PING_CMD/#define\ PING_CMD/' config/general.h
 cp "${SCRIPTPATH}/templates/ipxe.tmpl" embed.ipxe
 sed -i -e "s/@@HOSTNAME@@/$RESCUE_IPXE_HOSTNAME/g" embed.ipxe
 sed -i -e "s/@@NFSSERVER@@/$RESCUE_NFS_SERVER/g" embed.ipxe
-sed -i -e "s/@@NFSDIR@@/$RESCUE_NFS_DIR/g" embed.ipxe
+sed -i -e "s|@@NFSDIR@@|$RESCUE_NFS_DIR|g" embed.ipxe
 make -j $(nproc) bin/undionly.kpxe EMBED=embed.ipxe
 popd
 cp "${RESCUE_WORKDIR}/ipxe/src/bin/undionly.kpxe" $RESCUE_RESULT_DIR/$RESCUE_IPXE_OUTPUT_NAME
