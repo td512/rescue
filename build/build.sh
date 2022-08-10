@@ -146,7 +146,21 @@ cp "${SCRIPTPATH}/templates/ipxe.tmpl" embed.ipxe
 sed -i -e 's/@@HOSTNAME@@/$RESCUE_IPXE_HOSTNAME/g' embed.ipxe
 make -j $(nproc) bin/undionly.kpxe EMBED=embed.ipxe
 popd
-cp "${RESCUE_WORKDIR}/ipxe/src/bin/undionly.kpxe" ./$RESCUE_IPXE_OUTPUT_NAME
+cp "${RESCUE_WORKDIR}/ipxe/src/bin/undionly.kpxe" $RESCUE_RESULT_DIR/$RESCUE_IPXE_OUTPUT_NAME
+
+mkdir -p http
+echo "[+] Copying kernel"
+cp $RESCUE_SYSTEM_DIR/boot/vmlinuz-* \
+    http/vmlinuz
+echo "[+] Copying initrd"
+cp $RESCUE_SYSTEM_DIR/boot/initrd.img-* \
+    http/initrd
+echo "[+] Copying filesystem.squashfs"
+cp $RESCUE_WORKDIR/staging/live/filesystem.squashfs http/filesystem.squashfs
 
 echo "[*] Cleaning up"
 rm -rf $RESCUE_WORKDIR
+
+echo "[*] ISO compilation complete! Image can be found in ${RESCUE_RESULT_DIR}/${RESCUE_ISO_OUTPUT_NAME}"
+echo "[*] iPXE compilation complete! Image can be found in ${RESCUE_RESULT_DIR}/${RESCUE_IPXE_OUTPUT_NAME}"
+echo "[*] Netboot files can be found in the http directory. Copy these to the webserver located at http://${RESCUE_IPXE_HOSTNAME}"
