@@ -143,7 +143,7 @@ echo "[+] Enabling PING"
 sed -i 's/\/\/#define\ PING_CMD/#define\ PING_CMD/' config/general.h
 
 cp "${SCRIPTPATH}/templates/ipxe.tmpl" embed.ipxe
-sed -i -e 's/@@HOSTNAME@@/$RESCUE_IPXE_HOSTNAME/g' embed.ipxe
+sed -i -e "s/@@HOSTNAME@@/$RESCUE_IPXE_HOSTNAME/g" embed.ipxe
 make -j $(nproc) bin/undionly.kpxe EMBED=embed.ipxe
 popd
 cp "${RESCUE_WORKDIR}/ipxe/src/bin/undionly.kpxe" $RESCUE_RESULT_DIR/$RESCUE_IPXE_OUTPUT_NAME
