@@ -11,9 +11,11 @@ This project is a work in progress, and contains a few submodules. Beware, as so
 
 # Submodules
 
-This project has three main submodules. 
+This project has two main submodules. 
 - `rescue` - this is where the rescue system lives. You can chroot into it just as you would a regular system. See below for notes on functionality and how things work
 - `images` - this submodule contains OS images, just like you'd expect if you were using Hetzner. It's also the largest, so if you don't have very much disk space, *don't initialize this one*
+
+It's worthwhile to note that these submodules are hosted off site, and depending on the load of the system it may take a while to checkout the whole submodule. You will also need Git LFS installed to fully clone both submodules
 
 # Usage
 
